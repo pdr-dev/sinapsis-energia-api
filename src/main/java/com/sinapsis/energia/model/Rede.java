@@ -15,9 +15,12 @@ import javax.persistence.ManyToOne;
  * @author Pedro Henrique
  */
 @Entity(name = "tb_rede_mt")
-public class RedeMT {
+public class Rede {
 
-	public RedeMT() {
+	private static final Rede INSTANCE = new Rede();
+
+	public static Rede getInstance() {
+		return INSTANCE;
 	}
 
 	@Id

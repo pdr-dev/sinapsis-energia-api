@@ -14,7 +14,10 @@ import javax.persistence.Id;
 @Entity(name = "tb_subestacao")
 public class Subestacao {
 
-	public Subestacao() {
+	private static final Subestacao INSTANCE = new Subestacao();
+
+	public Subestacao getInstance() {
+		return INSTANCE;
 	}
 
 	@Id

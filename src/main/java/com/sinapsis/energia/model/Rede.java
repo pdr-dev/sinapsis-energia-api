@@ -28,7 +28,7 @@ public class Rede {
 	@Column(name = "id_rede_mt")
 	private Long idRedeMT;
 
-	@Column(name = "id_subestacao", nullable = false)
+//	@JoinColumn(name = "id_subestacao", nullable = false)
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "fk_subestacao_rede_mt")
 	private Subestacao subestacao;

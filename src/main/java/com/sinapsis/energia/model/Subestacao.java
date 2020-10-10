@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 /**
  * @author Pedro Henrique
@@ -16,9 +17,9 @@ public class Subestacao {
 
 	private static final Subestacao INSTANCE = new Subestacao();
 
-	public Subestacao getInstance() {
-		return INSTANCE;
-	}
+//	public Subestacao getInstance() {
+//		return INSTANCE;
+//	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +32,10 @@ public class Subestacao {
 	@Column(name = "nome", length = 100)
 	private String nome;
 
-	@Column(name = "latitude", nullable = false, precision = 15, scale = 13)
+	@Column(name = "latitude", nullable = false, precision = 25, scale = 13)
 	private BigDecimal latitude;
 
-	@Column(name = "longitude", nullable = false, precision = 15, scale = 13)
+	@Column(name = "longitude", nullable = false, precision = 25, scale = 13)
 	private BigDecimal longitude;
 
 	/**

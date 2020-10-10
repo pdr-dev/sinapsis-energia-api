@@ -25,7 +25,7 @@ import com.sinapsis.energia.repository.SubestacaoRepository;
 
 @CrossOrigin
 @RestController
-@RequestMapping("subestacao")
+@RequestMapping(path = "/subestacao")
 public class SubestacaoController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class SubestacaoController {
 		return subestacaoRepository.findAll();
 	}
 
-	@GetMapping
+	@GetMapping("/{codigo}")
 	public ResponseEntity<Subestacao> buscarPorCodigo(@PathVariable String codigo) {
 		Optional<Subestacao> subestacao = subestacaoRepository.findByCodigo(codigo);
 		if (subestacao.isPresent()) {

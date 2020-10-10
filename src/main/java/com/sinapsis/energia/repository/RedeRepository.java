@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.sinapsis.energia.model.Rede;
 import com.sinapsis.energia.model.Subestacao;
@@ -11,6 +12,7 @@ import com.sinapsis.energia.model.Subestacao;
 /**
  * @author Pedro Henrique
  */
+@Repository
 public interface RedeRepository extends JpaRepository<Rede, Long> {
 
 	List<Rede> findBySubestacao(Subestacao subestacao);

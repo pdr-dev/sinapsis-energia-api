@@ -65,7 +65,8 @@ public class SubestacaoController {
 		Optional<Subestacao> subestacaoExistente = subestacaoRepository.findById(idSubestacao);
 
 		if (!subestacaoExistente.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não foi encontrado uma Subestação com essa ID!");
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+					"Não foi encontrado nenhuma Subestação com essa ID!");
 		}
 
 		subestacao.setIdSubestacao(idSubestacao);

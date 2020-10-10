@@ -1,5 +1,6 @@
 package com.sinapsis.energia.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ import com.sinapsis.energia.model.Subestacao;
  */
 public interface RedeRepository extends JpaRepository<Rede, Long> {
 
-	Optional<Rede> findBySubestacao(Subestacao subestacao);
+	List<Rede> findBySubestacao(Subestacao subestacao);
 
 	Optional<Rede> findByCodigo(String codigo);
 

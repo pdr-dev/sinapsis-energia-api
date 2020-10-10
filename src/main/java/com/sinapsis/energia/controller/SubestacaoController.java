@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,14 +63,14 @@ public class SubestacaoController {
 			@Valid @RequestBody Subestacao subestacao) {
 		Optional<Subestacao> subestacaoExistente = subestacaoRepository.findById(idSubestacao);
 
-		if (!subestacaoExistente.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-					"Não foi encontrado nenhuma Subestação com essa ID!");
+		if (subestacaoExistente.isPresent()) {
+			subestacao.setIdSubestacao(idSubestacao);
+			subestacaoRepository.save(subestacao);
+			return ResponseEntity.ok(subestacao);
+		} else {
+			return ResponseEntity.notFound().build();
 		}
 
-		subestacao.setIdSubestacao(idSubestacao);
-		subestacaoRepository.save(subestacao);
-		return ResponseEntity.ok(subestacao);
 	}
 
 	@DeleteMapping

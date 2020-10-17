@@ -1,8 +1,5 @@
 package com.sinapsis.energia.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
+import com.sinapsis.energia.exception.RedeNaoEncontradaException;
 import com.sinapsis.energia.model.Rede;
 import com.sinapsis.energia.model.Subestacao;
-import com.sinapsis.energia.repository.RedeRepository;
-import com.sinapsis.energia.repository.SubestacaoRepository;
+import com.sinapsis.energia.service.impl.RedeServiceImpl;
 
 /**
  * @author Pedro Henrique
@@ -35,81 +31,38 @@ import com.sinapsis.energia.repository.SubestacaoRepository;
 public class RedeController {
 
 	@Autowired
-	private RedeRepository redeRepository;
-
-	@Autowired
-	private SubestacaoRepository subestacaoRepository;
+	private RedeServiceImpl redeService;
 
 	@GetMapping
-	public List<Rede> listar() {
-		return redeRepository.findAll();
+	public ResponseEntity<?> listar() {
+		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.listar());
 	}
 
 	@GetMapping
-	public ResponseEntity<Rede> buscarPorCodigoDaRede(@PathVariable String codigo) {
-		Optional<Rede> rede = redeRepository.findByCodigo(codigo);
-
-		if (rede.isPresent()) {
-			return ResponseEntity.ok(rede.get());
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<?> buscarPorCodigoDaRede(@PathVariable String codigo) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorCodigoDaRede(codigo));
 	}
 
 	@GetMapping
-	public List<Rede> buscarPorSubestacao(@Valid @RequestBody Subestacao subestacao) {
-		List<Rede> redesPorSubestacao = redeRepository.findBySubestacao(subestacao);
-
-		if (redesPorSubestacao.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-					"Não foi encontrado nenhuma Rede nessa Subestação!");
-		} else {
-			return redesPorSubestacao;
-		}
+	public ResponseEntity<?> buscarPorSubestacao(@Valid @RequestBody Subestacao subestacao) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorSubestacao(subestacao)
+				.orElseThrow(() -> new RedeNaoEncontradaException("Nenhuma Rede encontrada com essa Subestação.")));
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Rede incluir(@Valid @RequestBody Rede rede) {
-		Optional<Rede> redeExistente = redeRepository.findByCodigo(rede.getCodigo());
-
-		if (redeExistente.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe uma Rede com esse código!");
-		} else {
-			Optional<Subestacao> subestacaoExistente = subestacaoRepository
-					.findByCodigo(rede.getSubestacao().getCodigo());
-			if (subestacaoExistente.isPresent()) {
-				return redeRepository.save(rede);
-			} else {
-				Subestacao subestacao = subestacaoRepository.save(rede.getSubestacao());
-				rede.setSubestacao(subestacao);
-				return redeRepository.save(rede);
-			}
-		}
+	public ResponseEntity<?> incluir(@Valid @RequestBody Rede rede) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.redeService.incluir(rede));
 	}
 
 	@PutMapping
-	public ResponseEntity<Rede> alterar(@PathVariable Long idRede, @Valid @RequestBody Rede rede) {
-		Optional<Rede> redeExistente = redeRepository.findById(idRede);
-
-		if (redeExistente.isPresent()) {
-			Optional<Subestacao> subestacaoExistente = subestacaoRepository
-					.findByCodigo(rede.getSubestacao().getCodigo());
-			if (!subestacaoExistente.isPresent()) {
-				Subestacao subestacao = subestacaoRepository.save(rede.getSubestacao());
-				rede.setSubestacao(subestacao);
-			}
-			rede.setIdRedeMT(idRede);
-			redeRepository.save(rede);
-			return ResponseEntity.ok(rede);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<?> alterar(@PathVariable Long idRede, @Valid @RequestBody Rede rede) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.alterar(idRede, rede));
 	}
 
 	@DeleteMapping
 	public void excluir(@PathVariable Long idRede) {
-		redeRepository.deleteById(idRede);
+		this.redeService.excluir(idRede);
 	}
 
 }

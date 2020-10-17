@@ -16,5 +16,4 @@ public interface RedeRepository extends JpaRepository<Rede, Long> {
 	List<Rede> findBySubestacao(Subestacao subestacao);
 
 	Optional<Rede> findByCodigo(String codigo);
-
 }

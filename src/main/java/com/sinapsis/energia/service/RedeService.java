@@ -11,7 +11,7 @@ import com.sinapsis.energia.model.Subestacao;
  */
 public interface RedeService {
 
-	List<Rede> listar();
+	Optional<List<Rede>> listar();
 
 	Optional<Rede> buscarPorCodigoDaRede(String codigo);
 

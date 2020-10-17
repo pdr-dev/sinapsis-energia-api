@@ -6,17 +6,13 @@ import org.springframework.web.server.ResponseStatusException;
 /**
  * @author Pedro Henrique
  */
-public class RedeNaoEncontradaException extends ResponseStatusException {
+public class SubestacaoExistenteException extends ResponseStatusException {
 
 	private static final long serialVersionUID = -8662803271429640360L;
 
-	private static final HttpStatus DEFAULT_CODE = HttpStatus.NOT_FOUND;
+	private static final HttpStatus DEFAULT_CODE = HttpStatus.BAD_REQUEST;
 
-	public RedeNaoEncontradaException() {
-		super(DEFAULT_CODE, "Rede não encontrada.");
-	}
-
-	public RedeNaoEncontradaException(String message) {
+	public SubestacaoExistenteException(String message) {
 		super(DEFAULT_CODE, message);
 	}
 }

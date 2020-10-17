@@ -31,8 +31,13 @@ public class RedeServiceImpl implements RedeService {
 	}
 
 	@Override
-	public List<Rede> listar() {
-		return this.redeRepository.findAll();
+	public Optional<List<Rede>> listar() {
+		List<Rede> redes = redeRepository.findAll();
+
+		if (redes.isEmpty())
+			return Optional.empty();
+
+		return Optional.ofNullable(redes);
 	}
 
 	@Override
@@ -64,13 +69,11 @@ public class RedeServiceImpl implements RedeService {
 		} else {
 			Optional<Subestacao> subestacaoExistente = subestacaoRepository
 					.findByCodigo(rede.getSubestacao().getCodigo());
-			if (subestacaoExistente.isPresent()) {
-				return Optional.ofNullable(this.redeRepository.save(rede));
-			} else {
+			if (!subestacaoExistente.isPresent()) {
 				Subestacao subestacao = subestacaoRepository.save(rede.getSubestacao());
 				rede.setSubestacao(subestacao);
-				return Optional.ofNullable(this.redeRepository.save(rede));
 			}
+			return Optional.ofNullable(this.redeRepository.save(rede));
 		}
 	}
 
@@ -88,13 +91,11 @@ public class RedeServiceImpl implements RedeService {
 		}
 		rede.setIdRedeMT(idRede);
 		redeRepository.save(rede);
-		return Optional.of(rede);
-
+		return Optional.ofNullable(rede);
 	}
 
 	@Override
 	public void excluir(Long idRede) {
 		this.redeRepository.deleteById(idRede);
 	}
-
 }

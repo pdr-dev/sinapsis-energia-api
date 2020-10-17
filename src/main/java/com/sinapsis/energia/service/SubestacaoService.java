@@ -1,5 +1,6 @@
 package com.sinapsis.energia.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.sinapsis.energia.model.Subestacao;
@@ -12,9 +13,9 @@ public interface SubestacaoService {
 	/**
 	 * Retorna uma lista de subestações
 	 * 
-	 * @return Optional<Subestacao>
+	 * @return Optional<List<Subestacao>>
 	 */
-	Optional<Subestacao> listar();
+	Optional<List<Subestacao>> listar();
 
 	/**
 	 * Retorna uma determinada subestação de acordo com o código
@@ -30,7 +31,7 @@ public interface SubestacaoService {
 	 * @param Subestacao
 	 * @return Subestacao
 	 */
-	Subestacao incluir(Subestacao subestacao);
+	Optional<Subestacao> incluir(Subestacao subestacao);
 
 	/**
 	 * Altera uma subestação existente
@@ -47,5 +48,4 @@ public interface SubestacaoService {
 	 * @param idSubestacao
 	 */
 	void excluir(Long idSubestacao);
-
 }

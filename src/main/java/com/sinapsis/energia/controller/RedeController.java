@@ -38,12 +38,12 @@ public class RedeController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.listar());
 	}
 
-	@GetMapping
+	@GetMapping("/{codigo}")
 	public ResponseEntity<?> buscarPorCodigoDaRede(@PathVariable String codigo) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorCodigoDaRede(codigo));
 	}
 
-	@GetMapping
+	@GetMapping("/{subestacao}")
 	public ResponseEntity<?> buscarPorSubestacao(@Valid @RequestBody Subestacao subestacao) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorSubestacao(subestacao)
 				.orElseThrow(() -> new RedeNaoEncontradaException("Nenhuma Rede encontrada com essa Subestação.")));
@@ -55,14 +55,13 @@ public class RedeController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.redeService.incluir(rede));
 	}
 
-	@PutMapping
+	@PutMapping("/{idRede}")
 	public ResponseEntity<?> alterar(@PathVariable Long idRede, @Valid @RequestBody Rede rede) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.alterar(idRede, rede));
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/{idRede}")
 	public void excluir(@PathVariable Long idRede) {
 		this.redeService.excluir(idRede);
 	}
-
 }

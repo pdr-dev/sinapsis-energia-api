@@ -111,5 +111,4 @@ public class Rede {
 	public void setTensaoNominal(BigDecimal tensaoNominal) {
 		this.tensaoNominal = tensaoNominal;
 	}
-
 }

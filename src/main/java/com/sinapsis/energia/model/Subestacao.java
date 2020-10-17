@@ -106,5 +106,4 @@ public class Subestacao {
 	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
-
 }

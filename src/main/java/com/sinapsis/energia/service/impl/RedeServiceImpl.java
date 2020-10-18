@@ -52,12 +52,12 @@ public class RedeServiceImpl implements RedeService {
 
 	@Override
 	public Optional<List<Rede>> buscarPorSubestacao(Subestacao subestacao) {
-		List<Rede> redesPorSubestacao = redeRepository.findBySubestacao(subestacao);
+		Optional<List<Rede>> redesPorSubestacao = redeRepository.findBySubestacao(subestacao);
 
-		if (redesPorSubestacao.isEmpty())
+		if (redesPorSubestacao.isPresent())
 			return Optional.empty();
 
-		return Optional.ofNullable(redesPorSubestacao);
+		return redesPorSubestacao;
 	}
 
 	@Override

@@ -17,20 +17,14 @@ import javax.persistence.ManyToOne;
 @Entity(name = "tb_rede_mt")
 public class Rede {
 
-	private static final Rede INSTANCE = new Rede();
-
-	public static Rede getInstance() {
-		return INSTANCE;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_rede_mt")
 	private Long idRedeMT;
 
-	@Column(name = "id_subestacao", nullable = false)
+	@JoinColumn(name = "id_subestacao", nullable = false)
 	@ManyToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "fk_subestacao_rede_mt")
+//	@JoinColumn(name = "fk_subestacao_rede_mt")
 	private Subestacao subestacao;
 
 	@Column(name = "codigo", nullable = false, unique = true, length = 5)

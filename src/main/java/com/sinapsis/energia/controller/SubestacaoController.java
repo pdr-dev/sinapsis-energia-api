@@ -19,9 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sinapsis.energia.model.Subestacao;
 import com.sinapsis.energia.service.impl.SubestacaoServiceImpl;
 
+/**
+ * @author Pedro Henrique
+ */
+
 @CrossOrigin
 @RestController
-@RequestMapping("subestacao")
+@RequestMapping("subestacoes")
 public class SubestacaoController {
 
 	private SubestacaoServiceImpl subestacaoService;

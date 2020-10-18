@@ -14,12 +14,6 @@ import javax.persistence.Id;
 @Entity(name = "tb_subestacao")
 public class Subestacao {
 
-	private static final Subestacao INSTANCE = new Subestacao();
-
-	public Subestacao getInstance() {
-		return INSTANCE;
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_subestacao")

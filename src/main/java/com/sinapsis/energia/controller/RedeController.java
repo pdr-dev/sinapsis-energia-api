@@ -27,23 +27,27 @@ import com.sinapsis.energia.service.impl.RedeServiceImpl;
 
 @CrossOrigin
 @RestController
-@RequestMapping(name = "rede")
+@RequestMapping("redes")
 public class RedeController {
 
-	@Autowired
 	private RedeServiceImpl redeService;
+
+	@Autowired
+	public RedeController(RedeServiceImpl redeService) {
+		this.redeService = redeService;
+	}
 
 	@GetMapping
 	public ResponseEntity<?> listar() {
 		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.listar());
 	}
 
-	@GetMapping("/{codigo}")
+	@GetMapping("/codigo/{codigo}")
 	public ResponseEntity<?> buscarPorCodigoDaRede(@PathVariable String codigo) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorCodigoDaRede(codigo));
 	}
 
-	@GetMapping("/{subestacao}")
+	@GetMapping("/subestacao/{subestacao}")
 	public ResponseEntity<?> buscarPorSubestacao(@Valid @RequestBody Subestacao subestacao) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorSubestacao(subestacao)
 				.orElseThrow(() -> new RedeNaoEncontradaException("Nenhuma Rede encontrada com essa Subestação.")));

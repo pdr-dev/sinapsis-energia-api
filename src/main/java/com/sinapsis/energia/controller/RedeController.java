@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sinapsis.energia.exception.RedeNaoEncontradaException;
 import com.sinapsis.energia.model.Rede;
-import com.sinapsis.energia.model.Subestacao;
 import com.sinapsis.energia.service.impl.RedeServiceImpl;
 
 /**
@@ -47,9 +46,9 @@ public class RedeController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorCodigoDaRede(codigo));
 	}
 
-	@GetMapping("/subestacao/{subestacao}")
-	public ResponseEntity<?> buscarPorSubestacao(@Valid @RequestBody Subestacao subestacao) {
-		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorSubestacao(subestacao)
+	@GetMapping("/subestacao/{codigo}")
+	public ResponseEntity<?> buscarPorSubestacao(@PathVariable String codigo) {
+		return ResponseEntity.status(HttpStatus.OK).body(this.redeService.buscarPorSubestacao(codigo)
 				.orElseThrow(() -> new RedeNaoEncontradaException("Nenhuma Rede encontrada com essa Subestação.")));
 	}
 

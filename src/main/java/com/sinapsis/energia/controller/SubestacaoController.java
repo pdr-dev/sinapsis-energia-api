@@ -40,7 +40,7 @@ public class SubestacaoController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.subestacaoService.listar());
 	}
 
-	@GetMapping("/{codigo}")
+	@GetMapping("/codigo/{codigo}")
 	public ResponseEntity<?> buscarPorCodigo(@PathVariable String codigo) {
 		return ResponseEntity.status(HttpStatus.OK).body(this.subestacaoService.buscarPorCodigo(codigo));
 	}

@@ -51,8 +51,9 @@ public class RedeServiceImpl implements RedeService {
 	}
 
 	@Override
-	public Optional<List<Rede>> buscarPorSubestacao(Subestacao subestacao) {
-		Optional<List<Rede>> redesPorSubestacao = redeRepository.findBySubestacao(subestacao);
+	public Optional<List<Rede>> buscarPorSubestacao(String codigo) {
+		Optional<Subestacao> subestacaoExistente = subestacaoRepository.findByCodigo(codigo);
+		Optional<List<Rede>> redesPorSubestacao = redeRepository.findBySubestacao(subestacaoExistente.get());
 
 		if (redesPorSubestacao.isPresent())
 			return Optional.empty();
@@ -72,6 +73,8 @@ public class RedeServiceImpl implements RedeService {
 			if (!subestacaoExistente.isPresent()) {
 				Subestacao subestacao = subestacaoRepository.save(rede.getSubestacao());
 				rede.setSubestacao(subestacao);
+			} else {
+				rede.setSubestacao(subestacaoExistente.get());
 			}
 			return Optional.ofNullable(this.redeRepository.save(rede));
 		}
